@@ -18,13 +18,16 @@ function executeQueryBool($r) {
     }
     mysql_free_result($r); 
 }
-function getCategorias( $connect, $query='select * from categorias' ) {
+function getCategorias( $connect, $query='SELECT * FROM categorias' ) {
     return executeQuery( $connect, $query );
 }
-function getsubCategorias( $connect, $query='select * from categorias' ) {
+function getsubCategorias( $connect, $query='SELECT * FROM categorias' ) {
     return executeQuery( $connect, $query );
 }
-function getProductos( $query='select * from productos' ){
+function getProductos( $query='SELECT * FROM productos', $where = null ){
+    if( !empty($where) ) {
+        $query .= ' '.$where;
+    }
     return executeQuery( $connect, $query );
 }
 function getNumTotalDeRegistros( $registros ) {
@@ -52,16 +55,16 @@ function toArray($mysqlResultFetchArray){
 /* -=========== PRODUCTOS ===========- */
 function listarProductos( $desde, $hasta, $tamanio_pagina = 30, $paginado = false) {
     $limit = ' limit '.$desde. ', '.$hasta;
-    $productos = getProductos();
+    $productos = getProductos('SELECT * FROM productos','WHERE activos=1');
     $productosFetchArray = fetchArray($productos);
     $productosArray = toArray($productosFetchArray);
     
-    if( $paginado ) {
+    if( !$paginado ) {
         return $productosArray;
     } else {
         if( count($productosArray) ) { 
             /* PAGINAR */
-            $num_total_registros = getNumTotalDeRegistros( $productos );
+            $num_total_registros = getNumTotalDeRegistros( $productosArray );
             $total_paginas = ceil( $num_total_registros / $tamanio_pagina ); 
             $anterior = $pagina-$tamanio_pagina;
             $posterior = $pagina+$tamanio_pagina;
@@ -113,7 +116,7 @@ function guardameContacto( $datos, $query = 'INSERT INTO contacto VALUES (' ){
 /* -============OTRAS================- */
 function buscar( $nombre ){
     $query = 'SELECT * FROM productos';
-    $where = 'WHERE nombre ='.$nombre;
+    $where = ' '.'WHERE nombre ='.$nombre;
     return executeQuery( $connect, $query, $where );
 }
 ?>

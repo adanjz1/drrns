@@ -1,7 +1,7 @@
 <?php     
 /* -=========== BASE DE DATOS ===========- */
 function executeQuery( $query, $where=null ) {
-    if( isset($where) && !empty($where) ) {
+    if( !empty($where) ) {
         $query .= $where;
     }
     //$r = mysql_query( $query, $where );
@@ -10,7 +10,8 @@ function executeQuery( $query, $where=null ) {
                         'apellido' => 'Lelel',
                         'img'    => '',
                         'descripcion' => 'mucha descripcion',
-                        'especificaciones' => array()
+                        'especificaciones' => array(),
+                        'activo' => 1
                         ),
                 2 => array(
                         'nombre' => 'Honey 27 Flashback completo',
@@ -23,14 +24,16 @@ function executeQuery( $query, $where=null ) {
                                                 'Trucks Tracker Dart 129',
                                                 'Rolamento Turbo Abec 7', 
                                                 'Roda Roxa Orangatang Fat Free 65mm 83a'
-                                                )
+                                                ),
+                        'activo' => 1
                         ),
                  3 => array(
                         'nombre' => 'Roda Abec 11 BigZigs Reflex - Pink - 75mm - 77a',
                         'apellido' => 'Lelel',
                         'img'    => '',
                         'descripcion' => 'mucha descripcion',
-                        'especificaciones' => array()
+                        'especificaciones' => array(),
+                        'activo' => 1
                         ),
                  4 => array(
                         'nombre' => 'Roda Gravity Drifter - Preta - 70mm - 80a',
@@ -43,14 +46,16 @@ function executeQuery( $query, $where=null ) {
                                                 'Trucks Tracker Dart 129',
                                                 'Rolamento Turbo Abec 7', 
                                                 'Roda Roxa Orangatang Fat Free 65mm 83a'
-                                                )
+                                                ),
+                        'activo' => 1
                         ),
                  5 => array(
                         'nombre' => 'Roda Abec 14 BigZigs Reflex - Green - 75mm - 721',
                         'apellido' => 'sarasa',
                         'img'    => '',
                         'descripcion' => 'Alguna descripcion',
-                        'especificaciones' => array()
+                        'especificaciones' => array(),
+                        'activo' => 1
                         ),
                  6 => array(
                         'nombre' => 'Rode Gravity - Preta - 90mm - 10a',
@@ -60,7 +65,16 @@ function executeQuery( $query, $where=null ) {
                         'especificaciones' => array(
                                                 'Rolamento Turbo Abec 7', 
                                                 'Roda Roxa Orangatang Fat Free 65mm 83a'
-                                                )
+                                                ),
+                        'activo' => 1
+                        ),
+                7 => array(
+                        'nombre' => 'Soy invisible',
+                        'precio' => '1000000000000,99',
+                        'img'    => 'transparent.png',
+                        'descripcion' => 'Las alarmas de calor corporal me ven :(' ,
+                        'especificaciones' => array(),
+                        'activo' => 0
                         )
                 );
     return $r;
@@ -74,13 +88,16 @@ function executeQueryBool( $query, $connect ) {
         return false;
     }
 }
-function getCategorias( $query='select * from categorias' ) {
+function getCategorias( $query='SELECT * FROM categorias' ) {
     return executeQuery( $query );
 }
-function getsubCategorias( $query='select * from categorias' ) {
+function getsubCategorias( $query='SELECT * FROM categorias' ) {
     return executeQuery( $query );
 }
-function getProductos( $query='select * from productos' ){
+function getProductos( $query='SELECT * FROM productos', $where = null ){
+    if( !empty($where) ) {
+        $query .= ' '.$where;
+    }
     return executeQuery( $query );
 }
 function getNumTotalDeRegistros( $registros ) {
@@ -108,16 +125,16 @@ function toArray($mysqlResult){
 /* -=========== PRODUCTOS ===========- */
 function listarProductos( $desde, $hasta, $tamanio_pagina = 30, $paginado = false) {
     $limit = ' limit '.$desde. ', '.$hasta;
-    $productos = getProductos();
+    $productos = getProductos('SELECT * FROM productos','WHERE activos=1');
     $productosFetchArray = fetchArray($productos);
     $productosArray = toArray($productosFetchArray);
     
-    if( $paginado ) {
+    if( !$paginado ) {
         return $productosArray;
     } else {
         if( count($productosArray) ) { 
             /* PAGINAR */
-            $num_total_registros = getNumTotalDeRegistros( $productos );
+            $num_total_registros = getNumTotalDeRegistros( $productosArray, true );
             $total_paginas = ceil( $num_total_registros / $tamanio_pagina ); 
             $anterior = $pagina-$tamanio_pagina;
             $posterior = $pagina+$tamanio_pagina;
