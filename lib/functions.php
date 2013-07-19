@@ -1,14 +1,17 @@
 <?php 
+global $connect;
+
 /* -=========== BASE DE DATOS ===========- */
-function executeQuery( $connect, $query='', $where=null ) {
+
+function executeQuery( $query='', $where=null ) {
     if( !empty($where) ) {
         $query .= $where;
     }
-    $r = @mysql_query( $connect, $query, $where );
+    $r = @mysql_query( $query, $connect );
     mysql_free_result($r); 
     return $r;
 }
-function executeQueryBool($r) {
+function executeQueryBool($query) {
     $r = @mysql_query( $query, $connect );
     
     if( odbc_num_rows($r) > 0 ) {
@@ -18,17 +21,17 @@ function executeQueryBool($r) {
     }
     mysql_free_result($r); 
 }
-function getCategorias( $connect, $query='SELECT * FROM categorias' ) {
-    return executeQuery( $connect, $query );
+function getCategorias( $query='SELECT * FROM categorias' ) {
+    return executeQuery( $query );
 }
-function getsubCategorias( $connect, $query='SELECT * FROM categorias' ) {
-    return executeQuery( $connect, $query );
+function getsubCategorias( $query='SELECT * FROM categorias' ) {
+    return executeQuery( $query );
 }
 function getProductos( $query='SELECT * FROM productos', $where = null ){
     if( !empty($where) ) {
         $query .= ' '.$where;
     }
-    return executeQuery( $connect, $query );
+    return executeQuery( $query );
 }
 function getNumTotalDeRegistros( $registros ) {
     if(is_array( $registros )) {
@@ -88,7 +91,7 @@ function listarProductos( $desde, $hasta, $tamanio_pagina = 30, $paginado = fals
 
 /* -============CONTACTO=============- */
 
-function enviarFormulario($to,$connect) {
+function enviarFormulario( $to ) {
     foreach($_POST as $nombre => $valor ) {
        $datosArray[$nombre] = $valor; 
     }
@@ -110,13 +113,13 @@ function guardameContacto( $datos, $query = 'INSERT INTO contacto VALUES (' ){
     }
     $query .= ')';
     
-    return executeQueryBool( $connect, $query );
+    return executeQueryBool( $query );
 }
 
 /* -============OTRAS================- */
 function buscar( $nombre ){
     $query = 'SELECT * FROM productos';
     $where = ' '.'WHERE nombre ='.$nombre;
-    return executeQuery( $connect, $query, $where );
+    return executeQuery( $query, $where );
 }
 ?>

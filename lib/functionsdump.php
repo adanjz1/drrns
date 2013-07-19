@@ -4,7 +4,6 @@ function executeQuery( $query, $where=null ) {
     if( !empty($where) ) {
         $query .= $where;
     }
-    //$r = mysql_query( $query, $where );
     $r = array( 1 => array(
                         'nombre' => 'Lalo',
                         'apellido' => 'Lelel',
@@ -79,8 +78,7 @@ function executeQuery( $query, $where=null ) {
                 );
     return $r;
 }
-function executeQueryBool( $query, $connect ) {
-    //$r = mysql_query( $query, $connect );
+function executeQueryBool( $query ) {
     $r = 3;
     if( odbc_num_rows($r) > 0 ) {
         return true;
