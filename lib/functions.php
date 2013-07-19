@@ -23,8 +23,8 @@ function executeQueryBool($query) {
     }
     mysql_free_result($r); 
 }
-function getCategorias($level=1){
-	$query = "SELECT entity_id FROM catalog_category_entity WHERE level = ".$level;
+function getCategorias(){
+	$query = "SELECT entity_id FROM catalog_category_entity WHERE level = 1";
 	$response = mysql_query($query);
 	$categories = array();
 	while ($dato = mysql_fetch_array($response,MYSQL_ASSOC)) {

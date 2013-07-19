@@ -1,8 +1,8 @@
 <?php
-function getCategorias($level=1){
+function getCategorias(){
 	$id_con=mysql_connect("localhost","root","");//Nombre del server, usuario, contraseña
 	mysql_select_db("magento",$id_con);//Nomber de la base de datos, como me conecto
-	$query = "SELECT entity_id FROM catalog_category_entity WHERE level = ".$level;
+	$query = "SELECT entity_id FROM catalog_category_entity WHERE level = 1";
 	$response = mysql_query($query);
 	$categories = array();
 	while ($dato = mysql_fetch_array($response,MYSQL_ASSOC)) {
