@@ -1,10 +1,17 @@
 .guest-select {width:305px !important;}
 
-
+.page{
+    width: 70%;
+margin: auto;
+position:relative;
+margin-top: 10px;
+}
 h1.logo{
-    background: url('../images/sk81_marca.jpg') no-repeat !important;
+    background: url('../img/sk81_marca.jpg') no-repeat !important;
     width: 158px;
     height: 90px;
+    float: left;
+    margin-top: -20px;
 }
 h1.logo strong{
     display:none;
@@ -12,17 +19,8 @@ h1.logo strong{
 h1.logo img{
     display:none;
 }
-.footer ul.links {
-    display: none;
-}
-.footer address{
-    display:none;
-}
-.footer ul {
+.header ul li{
     display: inline;
-    position: absolute;
-    top: 57px;
-    margin-left: -240px;
     color: black;
 }
 .header .welcome-msg {
@@ -65,7 +63,7 @@ background: white;
 .header .form-search {
     position: absolute;
     top: 0;
-    right: 29px;
+    right: 10%;
     width: 315px;
     height: 30px;
     background:none;
@@ -81,130 +79,77 @@ button.button {
 .lojaFisica{
     color:#17a64a;
     font-size: 38px;
-    margin-top: -31px;
+    margin-top: 30px;
+    font-weight: bold;
+    margin-left: 45px;
 }
 
 .footer-container { 
     border-top:none;
     background-color: white;
 }
-.footer {
+.header {
     width: 930px;
     margin: 0 auto;
-    padding: 10px 10px 50px;
+    padding: 10px 10px 0px;
     background-color: white;
 }
-.footer li.last {
-    background: none !important;
-    padding-right: 0 !important;
-    margin-left: 23px;
+.header li.last {
+    background: none;
+    padding:17px;
+    position: relative;
 }
 .seguinos{
     font-size: 15px;
     font-weight: bold;
 }
-.social{
-    margin-left:357px;
-    margin-top : 245px;
-
-}
 .btnFB{
-    background: url('../images/sk81/f.jpg') no-repeat;
+    background: url('../img/f.jpg') no-repeat;
     height: 65px;
     width: 69px;
-    margin-left: -140px;
     margin-top: 3px;
-    position: absolute
+    cursor:pointer;
+    float:left;
+}
+.btnFB:hover, .btnTW:hover, .btnYT:hover, .btnVI:hover{
+    opacity: 0.5;
 }
 .btnTW{
-   background: url('../images/sk81/t.jpg') no-repeat;
+   background: url('../img/t.jpg') no-repeat;
     height: 65px;
     width: 71px;
     margin-top: 5px;
-    margin-left: -31px;
+    cursor:pointer;
+    float:left;
 }
 .btnYT{
-    background: url('../images/sk81/yt.jpg') no-repeat;
+    background: url('../img/yt.jpg') no-repeat;
     height: 70px;
     width: 71px;
-    margin-top: -63px;
-    margin-left: 71px;
+    cursor:pointer;
+    float:left;
 }
     
 
 .btnVI{
-   background: url('../images/sk81/v.jpg') no-repeat;
+   background: url('../img/v.jpg') no-repeat;
     height: 74px;
     width: 71px;
-    margin-top: -69px;
-    margin-left: 171px;
+    cursor:pointer;
+    float:left;
 }
 .footData{
     font-size: 15px;
     font-size: 15px;
-    margin-left: -185px;
     margin-top: 20px;
-    font-weight: bold;
 }
 
 
-
-#ayax1 { height: 375px; width: 500px;
-margin: 0 auto;
-overflow: hidden;
-position: relative;
--moz-border-shadow: 0 0 10px black;
-border-shadow: 0 0 10px black;
--webkit-border-shadow: 0 0 10px black;
--o-border-shadow: 0 0 10px black;
-}
-#ayaximages { position:absolute;
-left: 0; top: 0;
-width: 3500px;
-moz-transition:all 1s ease-in-out;
--webkit-transition:all 1s.ease-in-out;
--o-transition:all 1s.ease-in-out;
-transition:all 1s ease-in-out;
-}
-/* las imágenes, tamaño height y width*/
-#ayaximages img {-moz-transition:all 4s ease-in-out;
--webkit-transition:all 4s.ease-in-out;
--o-transition:all 4s.ease-in-out;
-transition:all 4s ease-in-out;
-height: 375px;
-width: 500px;
-}
-
-/* Ahora los botones , donde se cambia la visualización y colores*/
-#ayaxlinks {padding: 7px 0;
-width: 600px;
-background-image: none;
-background-repeat: repeat-x;
-background-color: none;
-border: 1px #000000;
-text-align: center;
-margin-right: 250px;}
-/* el HOVER al pasar el mouse sobre los botones*/
-#ayaxlinks:hover {padding: 7px 0;width: 600px;background-image: none;background-repeat: repeat-x;background-color: #;border: 1px #000000 text-align: center;margin-top:1px;}
-/* EL COLOR DE EL TEXTO/LINKS */
-#ayaxlinks a { background-color: #292929; border-radius: 8px; box-shadow: 0 0 5px #292929; margin: 0 2px; padding: 10px 10px; text-decoration: none;}
-/* HOVER DE LOS LINKS AL PASAR EL MOUSE */
-#ayaxlinks a:hover { box-shadow: 0 0 8px #292929; color: white; text-shadow:2px 2px 2px; black;}
-
-
-
-
-#ayaxlinks a:hover {
-    box-shadow: 0 0 8px green;
-    color: white;
-    text-shadow: 2px 2px 2px;
-    background-color: green;
-}
 
 /*CAROUSEL*/
 ul.controls li{ display: inline;}
-    ul.controls li a{ background:url('../images/sk81/bot_car_1.jpg') no-repeat; padding: 5px; color: #FF5B00; text-decoration: none;  display : inline-block; text-indent: -3000px; width : 7px;margin-left: 4px;}
-ul.controls li a.active{ background:url('../images/sk81/bot_car_2.jpg') no-repeat;color:#1A1A1A}
+    ul.controls li a{ background:url('../img/bot_car_1.jpg') no-repeat; padding: 5px; color: #FF5B00; text-decoration: none;  display : inline-block; text-indent: -3000px; width : 7px;margin-left: 4px;}
+ul.controls li a.active{ background:url('../img/bot_car_2.jpg') no-repeat;color:#1A1A1A}
 
 div#section2 {
 		background:#666666;
@@ -215,7 +160,6 @@ div.scroller {
 	width: 892px; 
 	height: 300px;
 	overflow: hidden;
-	border:1px solid #cccccc;
 }
 div.scroller div.section {
 		/* modify width and height of each section as needed (should match the size of the scroller window)	*/		
@@ -230,7 +174,7 @@ div.scroller div.content {
 }
 
 .flecha_izq{
-    background: url('../images/sk81/home_destacado_flecha_izq.png') no-repeat;
+    background: url('../img/home_destacado_flecha_izq.png') no-repeat;
     width: 19px;
     height: 28px;
     position: absolute;
@@ -239,7 +183,7 @@ div.scroller div.content {
 }
 
 .flecha_der{
-    background: url('../images/sk81/home_destacado_flecha_dere.png') no-repeat;
+    background: url('../img/home_destacado_flecha_dere.png') no-repeat;
     position: absolute;
     margin-top: -220px;
     margin-left: 875px;
@@ -250,9 +194,25 @@ div.scroller div.content {
 }
 
 .pointsLine{
-    background: url('../images/sk81/linea_ptos.jpg') no-repeat;
+    background: url('../img/linea_ptos.jpg') no-repeat;
+    width: 92%;
+height: 20px;
+margin-top: 20px;
+margin-left: 45px;
 }
-
+.pointsLine2{
+    background: url('../img/linea_ptos.jpg') no-repeat;
+    width: 92%;
+height: 20px;
+margin-top: 20px;
+}
+.subTitle{
+    margin-left: 45px;
+    font-size: 25px;
+    color:#bbb;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
 .img_slider{
     margin-top: -11px;
     margin-left: -11px;
@@ -262,6 +222,119 @@ div.scroller div.content {
     width:100%;
 }
 .pagos{
-    background: url('../images/sk81/productos_top.jpg') no-repeat;
+    background: url('../img/productos_top.jpg') no-repeat;
     height:100px;
+}
+.botonera{
+    margin-top: 35px;
+    height: 30px;
+}
+.carousel-control{
+    border: 0px;
+    color: transparent;
+}
+.carousel-control:hover{
+    color:transparent;
+}
+.carousel-control.left{
+    background: url('../img/home_destacado_flecha_izq.png') no-repeat !important;
+}
+.carousel-control.right{
+    background: url('../img/home_destacado_flecha_dere.png') no-repeat !important;
+}
+.social{
+    color: #aaa;
+    text-align: center;
+}
+.icon{
+    display: inline;
+}
+.icons{
+    clear:both;
+    height: 75px;
+    width: 290px;
+    margin: auto;
+}
+.jcarousel-prev{
+    width: 16px !important;
+    height: 52px !important;
+    background: url('../img/home_flecha_iz.png') no-repeat !important;
+}
+.jcarousel-next{
+    width: 16px !important;
+    height: 52px !important;
+    background: url('../img/home_flecha_dere.png') no-repeat !important;
+}
+.carousel-indicators{
+    top: 100%;
+}
+.carousel-indicators li{
+    background: url('../img/bot_car_1.jpg') no-repeat !important;
+    width: 20px;
+    height: 20px;
+    cursor:pointer;
+}
+.carousel-indicators .active{
+    background: url('../img/bot_car_2.jpg') no-repeat !important;
+    width: 20px;
+    height: 20px;
+    cursor:pointer;
+}
+.header ul li{
+    cursor:pointer;
+}
+.header ul li.active{
+    background: url('../img/home_flecha_arriba.jpg') no-repeat 50% 38px;
+    padding-bottom: 10px;
+}
+.header ul li:hover{
+    background: url('../img/home_flecha_arriba.jpg') no-repeat 50% 38px;
+    padding-bottom: 10px;
+}
+.leftText{
+    float:left;
+    width: 45%
+}
+.rightText{
+    float:right;
+    width: 45%
+}
+.greyText{
+    color:#ccc;
+}
+.sportTitle{
+    font-size: 20px;
+    color:#999;
+}
+.subSportTitle{
+    font-size: 12px;
+    color:#ccc;
+}
+.deportista{
+    font-size: 11px;
+}
+.titSobre{
+    font-size: 20px;
+}
+.subAtletas{
+    display: none;
+    background-color: #000;
+padding: 10px;
+width: 80px;
+position: absolute;
+margin-left: 0;
+}
+.subAtletas li:hover{
+    opacity: 0.5;
+}
+.subAtletas li{
+    color:#fff !important;
+    margin-left: -3px;
+}
+
+.atletas:hover{
+background-image: none !important;
+    background-color: #000 !important;
+color: #fff;
+
 }
