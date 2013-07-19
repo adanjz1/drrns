@@ -34,11 +34,11 @@ function getProductos( $query='SELECT * FROM productos', $where = null ){
     return executeQuery( $query );
 }
 function getNumTotalDeRegistros( $registros ) {
-    if(is_array( $registros )) {
-        return count( $registros );
-   } else {
-       return mysql_num_rows( $registros );
-   }
+    $query = 'SELECT count(*) FROM '.$tabla;
+    if( $activos ){
+        $query .= ' WHERE activos=1';
+    }
+    return executeQuery( $query );
 }
 /* CONVERSIONES */
 function fetchArray($mysqlResult) {
@@ -57,8 +57,8 @@ function toArray($mysqlResultFetchArray){
 
 /* -=========== PRODUCTOS ===========- */
 function listarProductos( $desde, $hasta, $tamanio_pagina = 30, $paginado = false) {
-    $limit = ' limit '.$desde. ', '.$hasta;
-    $productos = getProductos('SELECT * FROM productos','WHERE activos=1');
+    $where = 'WHERE activos =1  limit '.$desde. ', '.$hasta;
+    $productos = getProductos('SELECT * FROM productos',$where);
     $productosFetchArray = fetchArray($productos);
     $productosArray = toArray($productosFetchArray);
     
