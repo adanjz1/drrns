@@ -1,0 +1,10 @@
+!completar con email de Brian
+
+Tabla atribute 
+// Atributos de un producto // 
+precios, etc
+
+Relaciones
+un producto se llama entity // una entity esta compuesta por atributos // entity - atribute
+Tabla entity
+el Entity es el id del producto

@@ -1,20 +1,26 @@
 <?php 
 
+// HARDCODEAR returns
+//  array("nombre","")
+
 /* -=========== BASE DE DATOS ===========- */
-function executeQuery( $connect, $query, $where ) {
-    if( isset($where) && !empty($where) ) {
+function executeQuery( $connect, $query=null, $where=null ) {
+    if( !empty($where) ) {
         $query .= $where;
     }
-    $r = mysql_query( $connect, $query, $where );
+    $r = @mysql_query( $connect, $query, $where );
+    mysql_free_result($r); 
     return $r;
 }
 function executeQueryBool($r) {
-    $r = mysql_query( $query, $connect );
+    $r = @mysql_query( $query, $connect );
+    
     if( odbc_num_rows($r) > 0 ) {
         return true;
     } else {
         return false;
     }
+    mysql_free_result($r); 
 }
 function getCategorias( $connect, $query='select * from categorias' ) {
     return executeQuery( $connect, $query );
@@ -25,74 +31,37 @@ function getsubCategorias( $connect, $query='select * from categorias' ) {
 function getProductos( $query='select * from productos' ){
     return executeQuery( $connect, $query );
 }
+function getNumTotalDeRegistros( $registros ) {
+    if(is_array( $registros )) {
+        return count( $registros );
+   } else {
+       return mysql_num_rows( $registros );
+   }
+}
 
 /* -=========== PRODUCTOS ===========- */
-function listarProductos( $connect, $desde, $hasta ) {
+function listarProductos( $desde, $hasta, $tamaño_pagina = 30) {
     $limit = ' limit '.$desde. ', '.$hasta;
-    $rs = executeQueryBool( $connect, $query, $limit );    
-    if( $rs ) { 
-        listar($rs);
-        paginar($rs);          
+    $productos = getProductos();
+
+    if( count($productos) ) { 
+        /* PAGINAR */
+        $num_total_registros = getNumTotalDeRegistros( $productos );
+        $total_paginas = ceil( $num_total_registros / $tamaño_pagina ); 
+        $anterior = $pagina-$tamaño_pagina;
+        $posterior = $pagina+$tamaño_pagina;
+        
+        $paginado = array( 
+                        'total-de-registros' => $num_total_registros,
+                        'total-paginas' => $total_paginas,
+                        'anterior' => $anterior,
+                        'posterior' => $posterior
+                        );
+        return $paginado;
     } else {
-        header('Location: lalalal.php');
+        //header('Location: lalalal.php');
+        echo 'No hay productos';
     }
-}
-function listar($rs) {
-    $keys = array_keys($lista[0]);
-   
-    foreach ($keys as $k) {
-        $k = ucwords($k);
-        $fieldsNames[$i] = ($k != "#") ? strtolower($k) : 'id';
-        $table = $table . "<th bgcolor = '#a3d869'><font color='#FFFFFF'>" . $k . "</font></th>";
-    }
-    
-    foreach ($lista as $u) {
-        $table = $table . "<tr>";
-        $id = $u['id_'.$table_name];
-        foreach ($u as $data) {
-            $class= 'input-medium';
-            $table = $table . "<td><input type='text' style='color:#004b2b' class='$class' id='$fieldsNames[$ii]-$id' value='$data' disabled /></td>";
-        }
-    }
-    
-    $table = $table . "</tr>";    
-}
-function paginar($rs){
-    $num_total_registros = mysql_num_rows($rs); 
-    //calculo el total de páginas 
-    $total_paginas = ceil( $num_total_registros / $tamaño_pagina); 
-        //muestro los distintos índices de las páginas, si es que hay varias páginas 
-        if ($total_paginas > 1){ 
-            $table.= "<tr><td colspan='11' align='center' >";
-            $anterior = $pagina-$tamaño_pagina;
-            $posterior = $pagina+$tamaño_pagina;
-            for ($i=$pagina;$i<=$total_paginas;$i++){ 
-                if( $anterior > 0 && $i==$pagina ) {
-                    $table .= "<a href=listado.php?pagina=" . $anterior . "> << </a> "; 
-                } elseif ( $pagina < $tamaño_pagina && $pagina != 0 && $i==$pagina ) {
-                    $anterior = 0;
-                    $table .= "<a href=listado.php?pagina=" . $anterior . "> << </a> "; 
-                }
-                if( $hasta == $i ) {
-                    ( $posterior > $total_paginas ) ? $posterior = $total_paginas : $posterior; 
-                    $table .= "<a href=listado.php?pagina=" . $posterior . "> >> </a> "; 
-                    break;
-                }
-                if ($pagina == $i) {
-                     //si muestro el índice de la página actual, no coloco enlace 
-                     $table .= $pagina . " "; 
-                } else {
-                     //si el índice no corresponde con la página mostrada actualmente, coloco el enlace para ir a esa página 
-                     $table .= "<a href=listado.php?pagina=" . $i . "> " . $i . " </a> "; 
-                }
-            }
-            $table.= "</td></tr>";
-        }
-        
-        //cerramos el conjunto de resultado y la conexión con la base de datos 
-        mysql_free_result($rs); 
-        
-        print_r($table);
 }
 
 /* -============CONTACTO=============- */
