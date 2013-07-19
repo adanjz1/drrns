@@ -106,7 +106,7 @@ function toArray($mysqlResult){
 }
 
 /* -=========== PRODUCTOS ===========- */
-function listarProductos( $desde, $hasta, $tamaño_pagina = 30, $paginado = false) {
+function listarProductos( $desde, $hasta, $tamanio_pagina = 30, $paginado = false) {
     $limit = ' limit '.$desde. ', '.$hasta;
     $productos = getProductos();
     $productosFetchArray = fetchArray($productos);
@@ -118,9 +118,9 @@ function listarProductos( $desde, $hasta, $tamaño_pagina = 30, $paginado = fals
         if( count($productosArray) ) { 
             /* PAGINAR */
             $num_total_registros = getNumTotalDeRegistros( $productos );
-            $total_paginas = ceil( $num_total_registros / $tamaño_pagina ); 
-            $anterior = $pagina-$tamaño_pagina;
-            $posterior = $pagina+$tamaño_pagina;
+            $total_paginas = ceil( $num_total_registros / $tamanio_pagina ); 
+            $anterior = $pagina-$tamanio_pagina;
+            $posterior = $pagina+$tamanio_pagina;
 
             $r = array( 'paginado' => 
                             array(
@@ -134,7 +134,7 @@ function listarProductos( $desde, $hasta, $tamaño_pagina = 30, $paginado = fals
             return $r;
         } else {
             // no hay productos
-            return true; 
+            return false; 
         }
     }
 }
@@ -149,7 +149,7 @@ function enviarFormulario($to,$connect) {
     if( mail($to, $datosArray['subject'], $datosArray['message']) ) {
         $bool = guardameContacto($datosArray);
         if($bool){
-            header('Location: lalalal.php');
+            return true;
         } else {
             echo 'error en guardar contacto';
         }
