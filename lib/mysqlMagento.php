@@ -106,5 +106,5 @@ function cargarProductos($category = NULL,$subCategory= NULL){
         array_push($productos, $subCategories);
         return $productos;
 }
-print_r(cargarProductos(7));
+//print_r(cargarProductos(7));
 ?>
