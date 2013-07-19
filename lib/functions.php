@@ -34,29 +34,52 @@ function getNumTotalDeRegistros( $registros ) {
        return mysql_num_rows( $registros );
    }
 }
+/* CONVERSIONES */
+function fetchArray($mysqlResult) {
+    return mysql_fetch_array($mysqlResult,MYSQL_ASSOC);
+}
+function toArray($mysqlResultFetchArray){
+    $res=array();
+        
+    while ($mysqlResultFetchArray)
+    {
+        $res[]=$mysqlResultFetchArray;
+    }
+
+    return $res;
+}
 
 /* -=========== PRODUCTOS ===========- */
-function listarProductos( $desde, $hasta, $tamaño_pagina = 30) {
+function listarProductos( $desde, $hasta, $tamaño_pagina = 30, $paginado = false) {
     $limit = ' limit '.$desde. ', '.$hasta;
     $productos = getProductos();
-
-    if( count($productos) ) { 
-        /* PAGINAR */
-        $num_total_registros = getNumTotalDeRegistros( $productos );
-        $total_paginas = ceil( $num_total_registros / $tamaño_pagina ); 
-        $anterior = $pagina-$tamaño_pagina;
-        $posterior = $pagina+$tamaño_pagina;
-        
-        $paginado = array( 
-                        'total-de-registros' => $num_total_registros,
-                        'total-de-paginas' => $total_paginas,
-                        'anterior' => $anterior,
-                        'posterior' => $posterior
-                        );
-        return $paginado;
+    $productosFetchArray = fetchArray($productos);
+    $productosArray = toArray($productosFetchArray);
+    
+    if( $paginado ) {
+        return $productosArray;
     } else {
-        //header('Location: lalalal.php');
-        echo 'No hay productos';
+        if( count($productosArray) ) { 
+            /* PAGINAR */
+            $num_total_registros = getNumTotalDeRegistros( $productos );
+            $total_paginas = ceil( $num_total_registros / $tamaño_pagina ); 
+            $anterior = $pagina-$tamaño_pagina;
+            $posterior = $pagina+$tamaño_pagina;
+
+            $r = array( 'paginado' => 
+                            array(
+                                'total-de-registros' => $num_total_registros,
+                                'total-de-paginas' => $total_paginas,
+                                'anterior' => $anterior,
+                                'posterior' => $posterior,
+                                ),
+                        'productos' => $productosArray
+                        );
+            return $r;
+        } else {
+            // no hay productos
+            return true; 
+        }
     }
 }
 
