@@ -98,12 +98,12 @@ function getProductos( $query='SELECT * FROM productos', $where = null ){
     }
     return executeQuery( $query );
 }
-function getNumTotalDeRegistros( $registros ) {
-    if(is_array( $registros )) {
-        return count( $registros );
-   } else {
-       return mysql_num_rows( $registros );
-   }
+function getNumTotalDeRegistros( $tabla='productos',$activos ) {
+    $query = 'SELECT count(*) FROM '.$tabla;
+    if( $activos ){
+        $query .= ' WHERE activos=1';
+    }
+    return executeQuery( $query );
 }
 /* CONVERSIONES */
 function fetchArray($mysqlResult) {
@@ -122,8 +122,8 @@ function toArray($mysqlResult){
 
 /* -=========== PRODUCTOS ===========- */
 function listarProductos( $desde, $hasta, $tamanio_pagina = 30, $paginado = false) {
-    $limit = ' limit '.$desde. ', '.$hasta;
-    $productos = getProductos('SELECT * FROM productos','WHERE activos=1');
+    $where = 'WHERE activos =1  limit '.$desde. ', '.$hasta;
+    $productos = getProductos('SELECT * FROM productos',$where);
     $productosFetchArray = fetchArray($productos);
     $productosArray = toArray($productosFetchArray);
     
@@ -132,7 +132,7 @@ function listarProductos( $desde, $hasta, $tamanio_pagina = 30, $paginado = fals
     } else {
         if( count($productosArray) ) { 
             /* PAGINAR */
-            $num_total_registros = getNumTotalDeRegistros( $productosArray, true );
+            $num_total_registros = getNumTotalDeRegistros('productos',true);
             $total_paginas = ceil( $num_total_registros / $tamanio_pagina ); 
             $anterior = $pagina-$tamanio_pagina;
             $posterior = $pagina+$tamanio_pagina;
