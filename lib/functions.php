@@ -1,10 +1,6 @@
 <?php 
-
-// HARDCODEAR returns
-//  array("nombre","")
-
 /* -=========== BASE DE DATOS ===========- */
-function executeQuery( $connect, $query=null, $where=null ) {
+function executeQuery( $connect, $query='', $where=null ) {
     if( !empty($where) ) {
         $query .= $where;
     }
@@ -53,7 +49,7 @@ function listarProductos( $desde, $hasta, $tamaño_pagina = 30) {
         
         $paginado = array( 
                         'total-de-registros' => $num_total_registros,
-                        'total-paginas' => $total_paginas,
+                        'total-de-paginas' => $total_paginas,
                         'anterior' => $anterior,
                         'posterior' => $posterior
                         );
@@ -82,7 +78,7 @@ function enviarFormulario($to,$connect) {
         echo 'error en enviar el email';
     }
 }
-function guardameContacto( $query = 'INSERT INTO contacto VALUES (', $datos ){
+function guardameContacto( $datos, $query = 'INSERT INTO contacto VALUES (' ){
     foreach($datos as $key => $valor ) {
        $query .= $key . '=' . $valor . ',';
     }
@@ -93,6 +89,7 @@ function guardameContacto( $query = 'INSERT INTO contacto VALUES (', $datos ){
 
 /* -============OTRAS================- */
 function buscar( $nombre ){
+    $query = 'SELECT * FROM productos';
     $where = 'WHERE nombre ='.$nombre;
     return executeQuery( $connect, $query, $where );
 }
