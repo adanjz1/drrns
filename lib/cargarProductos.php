@@ -39,10 +39,11 @@ function cargarProductos($category = NULL,$subCategory= NULL){
 	foreach($products_entities as $entity){
 
 		//****IMAGEN****
-		$query = "SELECT value FROM catalog_product_entity_media_gallery WHERE entity_id = ".$entity." AND attribute_id = '88'";
+		$imgs=array();
+                $query = "SELECT value FROM catalog_product_entity_media_gallery WHERE entity_id = ".$entity." AND attribute_id = '88'";
 		$resp= mysql_query($query);
 		while ($dato = mysql_fetch_array($resp,MYSQL_ASSOC)) {
-	 		$img= $dato['value'];	
+	 		$imgs[]= $dato['value'];	
 		}	
 		//****IMAGEN****	
 			
